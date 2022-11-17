@@ -1,4 +1,6 @@
-﻿using OpenQA.Selenium;
+﻿using System;
+using System.Threading;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 namespace Testing;
@@ -6,9 +8,11 @@ namespace Testing;
 public class Tests
 {
     IWebDriver driver;
+
     [SetUp]
     public void Setup()
     {
+        //instatiate webdriver
         driver = new ChromeDriver();
         driver.Navigate().GoToUrl("https://saucedemo.com");
         Thread.Sleep(2000);
@@ -17,23 +21,24 @@ public class Tests
 
     [Test] //succesful login
     [TestCaseSource(nameof(Usernames))]
-    public void Test1(String username)
+    public void Test_login(String username)
     {
+        //navgiate through login page
         driver.FindElement(By.XPath("//input[@id='user-name']")).SendKeys(username);
         Thread.Sleep(1000);
         driver.FindElement(By.XPath("//input[@id='password']")).SendKeys("secret_sauce");
         Thread.Sleep(1000);
         driver.FindElement(By.XPath("//input[@id='login-button']")).Click();
         Thread.Sleep(1000);
-        String url = driver.Url;
-        Assert.That(url, Is.EqualTo("https://www.saucedemo.com/inventory.html"));
+
+
     }
 
     [Test]  //there is a store page with one or more items available for purchase
     [TestCaseSource(nameof(Usernames))]
-    public void Test2(String username)
+    public void Test_product_page(String username)
     {
-        //navigate to shop page
+        //navigate through login page
         driver.FindElement(By.XPath("//input[@id='user-name']")).SendKeys(username);
         Thread.Sleep(1000);
         driver.FindElement(By.XPath("//input[@id='password']")).SendKeys("secret_sauce");
@@ -41,11 +46,15 @@ public class Tests
         driver.FindElement(By.XPath("//input[@id='login-button']")).Click();
         Thread.Sleep(1000);
 
-        //should look to see if an item can be added to the cart 
+        //test if login was successful first 
+        String url = driver.Url;
+        Assert.That(url, Is.EqualTo("https://www.saucedemo.com/inventory.html"));
+
+        //find item names from page
         String item1 = driver.FindElement(By.XPath("//a[@id='item_1_title_link']/div[@class='inventory_item_name']")).Text;
         String item2 = driver.FindElement(By.XPath("//a[@id='item_4_title_link']/div[@class='inventory_item_name']")).Text;
 
-        //assert multiple tests more than one item is available for purchase 
+        //more than one item is present on the page
         Assert.Multiple(() =>
         {
             Assert.That(item1, Is.Not.Empty);
@@ -53,17 +62,21 @@ public class Tests
         });
     }
 
-    [Test]//try to add items to cart
+    [Test]  //try to add items to cart
     [TestCaseSource(nameof(Usernames))]
-    public void Test3(String username)
+    public void Test_purchasing(String username)
     {
-        //navigate to shop page
+        //navigate through login page
         driver.FindElement(By.XPath("//input[@id='user-name']")).SendKeys(username);
         Thread.Sleep(1000);
         driver.FindElement(By.XPath("//input[@id='password']")).SendKeys("secret_sauce");
         Thread.Sleep(1000);
         driver.FindElement(By.XPath("//input[@id='login-button']")).Click();
         Thread.Sleep(1000);
+
+        //test if login was successful first
+        String url = driver.Url;
+        Assert.That(url, Is.EqualTo("https://www.saucedemo.com/inventory.html"));
 
         //try to add item to cart
         driver.FindElement(By.XPath("//button[@data-test='add-to-cart-sauce-labs-bolt-t-shirt']")).Click();
@@ -80,7 +93,7 @@ public class Tests
     }
 
     //testcase source
-    static object[] Usernames =
+    static readonly object[] Usernames =
     {
         new object[] {"standard_user"},
         new object[] {"problem_user"},
