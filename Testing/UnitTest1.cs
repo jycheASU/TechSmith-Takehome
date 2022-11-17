@@ -5,6 +5,7 @@ using OpenQA.Selenium.Chrome;
 
 namespace Testing;
 
+//change page synchronization methods
 public class Tests
 {
     IWebDriver driver;
@@ -12,10 +13,11 @@ public class Tests
     [SetUp]
     public void Setup()
     {
-        //instatiate webdriver
+        //instantiate webdriver
         driver = new ChromeDriver();
         driver.Navigate().GoToUrl("https://saucedemo.com");
-        Thread.Sleep(2000);
+        driver.Manage().Window.Maximize();
+        driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
     }
 
 
@@ -30,8 +32,6 @@ public class Tests
         Thread.Sleep(1000);
         driver.FindElement(By.XPath("//input[@id='login-button']")).Click();
         Thread.Sleep(1000);
-
-
     }
 
     [Test]  //there is a store page with one or more items available for purchase

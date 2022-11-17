@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/jerryche/Projects/TechSmith_TakeHome/Testing/Testing.csproj": {}
+    "/Users/jerryche/Projects/TechSmith-Takehome/Testing/Testing.csproj": {}
   },
   "projects": {
-    "/Users/jerryche/Projects/TechSmith_TakeHome/Testing/Testing.csproj": {
+    "/Users/jerryche/Projects/TechSmith-Takehome/Testing/Testing.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/jerryche/Projects/TechSmith_TakeHome/Testing/Testing.csproj",
+        "projectUniqueName": "/Users/jerryche/Projects/TechSmith-Takehome/Testing/Testing.csproj",
         "projectName": "Testing",
-        "projectPath": "/Users/jerryche/Projects/TechSmith_TakeHome/Testing/Testing.csproj",
+        "projectPath": "/Users/jerryche/Projects/TechSmith-Takehome/Testing/Testing.csproj",
         "packagesPath": "/Users/jerryche/.nuget/packages/",
-        "outputPath": "/Users/jerryche/Projects/TechSmith_TakeHome/Testing/obj/",
+        "outputPath": "/Users/jerryche/Projects/TechSmith-Takehome/Testing/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/jerryche/.nuget/NuGet/NuGet.Config"
